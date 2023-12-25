@@ -2,6 +2,17 @@
 run:
 	poetry run python3 -m core.manage runserver
 
+# Setup poetry
+setup:
+	poetry config virtualenvs.create true --local
+	poetry config virtualenvs.in-project true --local
+
+# Install dependencies
+install: setup
+	poetry install --no-root
+	poetry run pre-commit install
+
+
 # Update configuration files
 update:
 	poetry update
@@ -25,3 +36,11 @@ coverage:
 	poetry run coverage run -m core.manage test
 	poetry run coverage html
 	poetry run coverage report
+
+# Run database development server
+db_up:
+	docker compose -f docker-compose.dev.yml up -d
+
+# Stop database development server
+db_down:
+	docker compose -f docker-compose.dev.yml down

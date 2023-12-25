@@ -1,5 +1,9 @@
+from core.project.settings import BASE_DIR
+
 DEBUG = False
-SECRET_KEY = "django-insecure-3)gqd#y5inj052qqcsdt%_*$+ol-xc1onl4^071v=2=_lr587)"
+SECRET_KEY = ')s@4(mmh*p^#*gg*b5$iywlfd85&^cz25kj$^4a5vcj1g(mjhy'
+
+ADMIN_URL = 'admin_debug/'
 
 ALLOWED_HOSTS = ['*']
 
@@ -27,7 +31,7 @@ ROOT_URLCONF = 'core.project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'core' / 'templates', BASE_DIR / 'core' / 'static'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -44,8 +48,12 @@ WSGI_APPLICATION = 'core.project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'core',
+        'USER': 'dev',
+        'PASSWORD': 'dev_pass',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -82,10 +90,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'media'  # type: ignore # noqa: F821
+MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'static'  # type: ignore # noqa: F821
+STATIC_ROOT = BASE_DIR / 'static'
+STATICFILES_DIRS = [
+    BASE_DIR / 'core' / 'static',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
