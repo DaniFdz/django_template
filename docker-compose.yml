@@ -5,12 +5,12 @@ services:
     image: mysql:8.0
     ports:
       - "3306:3306"
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: core
       MYSQL_USER: $MYSQL_USER
       MYSQL_PASSWORD: $MYSQL_PASSWORD
       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-
     command:
       [
         --character-set-server=utf8mb4,
@@ -29,6 +29,6 @@ services:
     environment:
       CORE_SETTINGS_LOCAL_SETTINGS_PATH: 'local/settings.prod.py'
       CORE_SETTINGS_DATABASES: '{"default": {"HOST":"db", "USER":"${MYSQL_USER}", "PASSWORD":"${MYSQL_PASSWORD}"}}'
-
-volumes:
-  db:
+    volumes:
+      - /var/www/media:/opt/project/media
+      - /var/www/static:/opt/project/static
